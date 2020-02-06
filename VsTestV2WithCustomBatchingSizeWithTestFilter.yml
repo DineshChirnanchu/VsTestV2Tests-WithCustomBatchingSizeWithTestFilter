@@ -1,0 +1,21 @@
+# The objective is to perform VSTESTV2 With CustomBatchingSizeWithTestFilter
+
+trigger:
+- master
+jobs:
+- job: RunTest1
+  displayName: 'Run Tests'
+  pool: Default
+  steps:              
+  - task: VisualStudioTestPlatformInstaller@1
+    displayName: 'Visual Studio Test Platform Installer'
+    inputs:
+      versionSelector: 'latestPreRelease'  
+  - task: VSTest@2
+    inputs:
+      testSelector: 'testAssemblies'
+      vsTestVersion: 'toolsInstaller'
+      batchingBasedOnAgentsOption: 'customBatchSize'
+      customBatchSizeValue: 2
+      testFiltercriteria: 'TestCategory=Nunit'
+      
